@@ -59,6 +59,8 @@ Development files and headers for %{name}.
 %{_bindir}/dos2unix -k LICENCE.lgpl.txt
 
 %build
+export CC=gcc
+export CXX=g++
 LDFLAGS='-Wl,--as-needed'; export LDFLAGS
 %cmake \
        -DOCE_DIR=%{_datadir}/cmake/Modules \
