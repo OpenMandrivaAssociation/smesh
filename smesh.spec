@@ -6,7 +6,7 @@
 
 Name:           smesh
 Version:        6.7.6
-Release:        1
+Release:        2
 Summary:        OpenCascade based MESH framework
 Group:          Graphics/3D
 
@@ -52,6 +52,12 @@ Provides:       %{name}-devel = %{version}-%{release}
 %description -n %{develname}
 Development files and headers for %{name}.
 
+%package	doc
+Summary:	Docs for %{name}
+
+%description	doc
+Docs for %{name}
+
 %prep
 %setup -q
 %autopatch -p1
@@ -88,6 +94,8 @@ make test -C build
 %{_libdir}/*.so.%{major}{,.*}
 
 %files -n %{develname}
-%doc %{_docdir}/smesh/
 %{_includedir}/*
 %{_libdir}/*.so
+
+%files doc
+%doc %{_docdir}/smesh/
