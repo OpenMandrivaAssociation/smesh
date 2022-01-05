@@ -1,36 +1,44 @@
 %bcond_with test
 
-%define major 3
-%define libname %mklibname smesh %{major}
-%define develname %mklibname smesh -d
+%define major 		8.3
+%define libname		%mklibname smesh %{major}
+%define develname	%mklibname smesh -d
 
-Name:           smesh
-Version:        6.7.6
-Release:        2
 Summary:        OpenCascade based MESH framework
+Name:           smesh
+Version:        9.7.0.1
+Release:        1
 Group:          Graphics/3D
 
 # This library is LGPLv2 with exceptions but links against the non-free library OCE.
 License:        LGPLv2
-URL:            https://github.com/tpaviot/smesh
-Source0:        https://github.com/tpaviot/smesh/archive/%{version}/%{name}-%{version}.tar.gz
+URL:            https://github.com/trelau/SMESH
+# Upstream uses git submodules
+# pip intall "patch==1.*"
+# git clone --recurse-submodules https://github.com/trelau/SMESH.git
+# cd SMESH
+# git archive --prefix smesh-<VERSION>/ -o smesh-<VERSION>.tar v<VERSION TAG>
+# python prepare.py
+# tar --transform='s,^src,smesh-<VERSION>/src,' -rf smesh-<VERSION>.tar src/*
+# gzip smesh-<VERSION>.tar
+Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
+Patch0:			smesh-cmake.patch
 BuildRequires:  cmake
+#BuildRequires:  catch-devel
 BuildRequires:  doxygen
 BuildRequires:  boost-devel
-BuildRequires:  gcc-gfortran
-BuildRequires:  f2c
-BuildRequires:  dos2unix
-BuildRequires:  opencascade-devel
+BuildRequires:  freeimage-devel
 BuildRequires:  graphviz
-# New BRs
+BuildRequires:  opencascade-devel
 BuildRequires:  pkgconfig(tbb)
 BuildRequires:  pkgconfig(sm)
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(glu)
 BuildRequires:  pkgconfig(freetype2)
-BuildRequires:  freeimage-devel
-
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xext)
+BuildRequires:  pkgconfig(xi)
+BuildRequires:  pkgconfig(xmu)
+BuildRequires:  vtk-devel
 # Dependencies for optional NETGENPlugin library.
 #BuildRequires:  netgen-mesher-devel
 #BuildRequires:  netgen-mesher-devel-private
@@ -38,11 +46,20 @@ BuildRequires:  freeimage-devel
 %description
 A complete OpenCascade based MESH framework.
 
+#---------------------------------------------------------------------------
+
 %package -n %{libname}
 Summary:        OpenCascade based MESH framework
 
 %description -n %{libname}
 A complete OpenCascade based MESH framework.
+
+%files -n %{libname}
+%license LICENSE.txt
+%doc README.md
+%{_libdir}/*.so
+
+#---------------------------------------------------------------------------
 
 %package -n %{develname}
 Summary:        Development files for %{name}
@@ -52,50 +69,43 @@ Provides:       %{name}-devel = %{version}-%{release}
 %description -n %{develname}
 Development files and headers for %{name}.
 
-%package	doc
-Summary:	Docs for %{name}
+%files -n %{develname}
+%{_includedir}/*
+#{_libdir}/*.so
+%{_libdir}/cmake/*.cmake
 
-%description	doc
-Docs for %{name}
+#---------------------------------------------------------------------------
+#
+#package	doc
+#Summary:	Docs for %{name}
+#
+#description	doc
+#Docs for %{name}
+#
+#files doc
+#doc %{_docdir}/smesh/
+#
+#---------------------------------------------------------------------------
 
 %prep
-%setup -q
-%autopatch -p1
-
-%{_bindir}/dos2unix -k LICENCE.lgpl.txt
+%autosetup -p1 -n %{name}-%{version}
 
 %build
-export CC=gcc
-export CXX=g++
 LDFLAGS='-Wl,--as-needed'; export LDFLAGS
 %cmake \
-       -DOCE_DIR=%{_datadir}/cmake/Modules \
-       -DMONOLITHIC_BUILD=OFF \
-       -DSMESH_TESTING=ON
-
-%make_build
-
-# Build documentation
-%make_build doc
-
-# Remove install script since we don't need it.
-%__rm -f doc/html/installdox
+	-DSMESH_TESTING=%{?with_test:ON}%{!?with_test:OFF} \
+	-DENABLE_NETGEN:BOOL=ON \
+	-DNEW_NETGEN_INTERFACE:BOOL=ON \
+	-DENABLE_MED:BOOL=OFF \
+	-DBUILD_TESTS:BOOL=TRUE \
+	-G Ninja
+%ninja_build
 
 %install
-%make_install -C build
+%ninja_install -C build
 
-%if %{with test}
 %check
+%if %{with test}
 make test -C build
 %endif
 
-%files -n %{libname}
-%license LICENCE.lgpl.txt
-%{_libdir}/*.so.%{major}{,.*}
-
-%files -n %{develname}
-%{_includedir}/*
-%{_libdir}/*.so
-
-%files doc
-%doc %{_docdir}/smesh/
