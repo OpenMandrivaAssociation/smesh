@@ -91,6 +91,9 @@ Development files and headers for %{name}.
 %autosetup -p1 -n %{name}-%{version}
 
 %build
+# FIXME as of 9.7.0.1, clang 13.0.0, fails to build with clang
+export CC=gcc
+export CXX=g++
 LDFLAGS='-Wl,--as-needed'; export LDFLAGS
 %cmake \
 	-DSMESH_TESTING=%{?with_test:ON}%{!?with_test:OFF} \
