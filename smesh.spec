@@ -1,13 +1,13 @@
-%bcond_with test
-
 %define major 		8.3
 %define libname		%mklibname smesh %{major}
 %define develname	%mklibname smesh -d
 
+%bcond_with test
+
 Summary:        OpenCascade based MESH framework
 Name:           smesh
-Version:        9.7.0.1
-Release:        2
+Version:        9.8.0.2
+Release:        1
 Group:          Graphics/3D
 
 # This library is LGPLv2 with exceptions but links against the non-free library OCE.
@@ -19,7 +19,7 @@ URL:            https://github.com/trelau/SMESH
 # cd SMESH
 # git archive --prefix smesh-<VERSION>/ -o smesh-<VERSION>.tar v<VERSION TAG>
 # python prepare.py
-# tar --transform='s,^src,smesh-<VERSION>/src,' -rf smesh-<VERSION>.tar src/*
+# gtar --transform='s,^src,smesh-<VERSION>/src,' -rf smesh-<VERSION>.tar src/*
 # gzip smesh-<VERSION>.tar
 Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:			smesh-cmake.patch
