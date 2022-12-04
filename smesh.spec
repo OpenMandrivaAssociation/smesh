@@ -31,12 +31,12 @@ BuildRequires:	boost-devel
 BuildRequires:	freeimage-devel
 BuildRequires:	graphviz
 BuildRequires:	opencascade-devel
+BuildRequires:	cmake(verdict)
 BuildRequires:	pkgconfig(tbb)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(glu)
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:	pkgconfig(verdict)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(xi)
