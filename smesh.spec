@@ -23,26 +23,28 @@ URL:            https://github.com/trelau/SMESH
 # gzip smesh-<VERSION>.tar
 Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:			smesh-cmake.patch
-BuildRequires:  cmake
+BuildRequires:	cmake
+BuildRequires:	ninja
 #BuildRequires:  catch-devel
-BuildRequires:  doxygen
-BuildRequires:  boost-devel
-BuildRequires:  freeimage-devel
-BuildRequires:  graphviz
-BuildRequires:  opencascade-devel
-BuildRequires:  pkgconfig(tbb)
-BuildRequires:  pkgconfig(sm)
-BuildRequires:  pkgconfig(glu)
-BuildRequires:  pkgconfig(freetype2)
+BuildRequires:	doxygen
+BuildRequires:	boost-devel
+BuildRequires:	freeimage-devel
+BuildRequires:	graphviz
+BuildRequires:	opencascade-devel
+BuildRequires:	pkgconfig(tbb)
+BuildRequires:	pkgconfig(sm)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(fontconfig)
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(xext)
-BuildRequires:  pkgconfig(xi)
-BuildRequires:  pkgconfig(xmu)
-BuildRequires:  vtk-devel
+BuildRequires:	pkgconfig(verdict)
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(xi)
+BuildRequires:	pkgconfig(xmu)
+BuildRequires:	vtk-devel
 # Dependencies for optional NETGENPlugin library.
-#BuildRequires:  netgen-mesher-devel
-#BuildRequires:  netgen-mesher-devel-private
+#BuildRequires:	netgen-mesher-devel
+#BuildRequires:	netgen-mesher-devel-private
 
 %description
 A complete OpenCascade based MESH framework.
