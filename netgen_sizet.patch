@@ -1,0 +1,30 @@
+diff -rupN --no-dereference netgen-6.2.2009/libsrc/core/python_ngcore.hpp netgen-6.2.2009-new/libsrc/core/python_ngcore.hpp
+--- a/src/Netgen/libsrc/core/python_ngcore.hpp	2020-11-11 17:40:06.000000000 +0100
++++ b/src/Netgen/libsrc/core/python_ngcore.hpp	2020-11-12 15:24:29.423268461 +0100
+@@ -107,10 +107,12 @@ namespace ngcore
+     static std::string GetName() { return "D"; }
+   };
+ 
++#ifdef _____LP64_____
+   template<>
+   struct PyNameTraits<size_t> {
+     static std::string GetName() { return "S"; }
+   };
++#endif
+ 
+   template<typename T>
+   struct PyNameTraits<std::shared_ptr<T>> {
+diff -rupN --no-dereference netgen-6.2.2009/libsrc/core/table.hpp netgen-6.2.2009-new/libsrc/core/table.hpp
+--- a/src/Netgen/libsrc/core/table.hpp	2020-11-11 17:40:06.000000000 +0100
++++ b/src/Netgen/libsrc/core/table.hpp	2020-11-12 15:24:29.424268459 +0100
+@@ -101,8 +101,10 @@ namespace ngcore
+   { return TablePrefixSum32 (FlatArray<unsigned> (entrysize.Size(), (unsigned int*)(int*)(entrysize.Addr(0)))); }
+   NETGEN_INLINE size_t * TablePrefixSum (FlatArray<std::atomic<int>> entrysize)
+   { return TablePrefixSum32 (FlatArray<unsigned> (entrysize.Size(), (unsigned int*)(std::atomic<int>*)entrysize.Addr(0))); }
++#ifdef _____LP64_____
+   NETGEN_INLINE size_t * TablePrefixSum (FlatArray<size_t> entrysize)
+   { return TablePrefixSum64 (entrysize); }
++#endif
+ 
+ 
+   /**

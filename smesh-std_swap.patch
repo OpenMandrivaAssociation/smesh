@@ -1,0 +1,18 @@
+Index: smesh-9.7.0.1/src/SMESH/src/SMESH/SMESH_MeshEditor.cxx
+===================================================================
+--- smesh-9.7.0.1.orig/src/SMESH/src/SMESH/SMESH_MeshEditor.cxx
++++ smesh-9.7.0.1/src/SMESH/src/SMESH/SMESH_MeshEditor.cxx
+@@ -4304,10 +4304,11 @@ void SMESH_MeshEditor::sweepElement(cons
+       bool sameOrder = ( Abs( i2 - i1 ) == 1 ) ? ( i2 > i1 ) : ( i2 < i1 );
+       if ( sameOrder )
+       {
+-        std::swap( itNN[0],    itNN[1] );
++		std::swap( itNN[0],    itNN[1] );
+         std::swap( prevNod[0], prevNod[1] );
+         std::swap( nextNod[0], nextNod[1] );
+-        std::swap( isSingleNode[0], isSingleNode[1] );
++        using std::swap;
++        swap( isSingleNode[0], isSingleNode[1] );
+         if ( nbSame > 0 )
+           sames[0] = 1 - sames[0];
+         iNotSameNode = 1 - iNotSameNode;

@@ -22,7 +22,10 @@ URL:            https://github.com/trelau/SMESH
 # gtar --transform='s,^src,smesh-<VERSION>/src,' -rf smesh-<VERSION>.tar src/*
 # gzip smesh-<VERSION>.tar
 Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
-Patch0:			smesh-cmake.patch
+Patch0:		smesh-cmake.patch
+# (fedora)
+Patch10:	smesh-std_swap.patch
+Patch11:	netgen_sizet.patch
 BuildRequires:	cmake
 BuildRequires:	ninja
 #BuildRequires:  catch-devel
