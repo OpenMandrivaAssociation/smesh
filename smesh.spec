@@ -7,7 +7,7 @@
 Summary:        OpenCascade based MESH framework
 Name:           smesh
 Version:        9.8.0.2
-Release:        5
+Release:        6
 Group:          Graphics/3D
 
 # This library is LGPLv2 with exceptions but links against the non-free library OCE.
@@ -23,6 +23,7 @@ URL:            https://github.com/trelau/SMESH
 # gzip smesh-<VERSION>.tar
 Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		smesh-cmake.patch
+Patch1:		smesh-9.8.0.2-boost_1.86.patch
 # (fedora)
 Patch10:	smesh-std_swap.patch
 Patch11:	netgen_sizet.patch
