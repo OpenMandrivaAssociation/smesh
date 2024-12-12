@@ -7,7 +7,7 @@
 Summary:        OpenCascade based MESH framework
 Name:           smesh
 Version:        9.8.0.2
-Release:        7
+Release:        8
 Group:          Graphics/3D
 
 # This library is LGPLv2 with exceptions but links against the non-free library OCE.
