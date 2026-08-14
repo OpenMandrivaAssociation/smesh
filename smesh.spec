@@ -22,6 +22,7 @@ URL:            https://github.com/trelau/SMESH
 # gtar --transform='s,^src,smesh-<VERSION>/src,' -rf smesh-<VERSION>.tar src/*
 # gzip smesh-<VERSION>.tar
 Source0:        https://github.com/trelau/SMESH/archive/v%{version}/%{name}-%{version}.tar.gz
+Source100:	smesh.rpmlintrc
 Patch0:		smesh-cmake.patch
 Patch1:		smesh-9.8.0.2-boost_1.86.patch
 # (fedora)

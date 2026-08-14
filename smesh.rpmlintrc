@@ -1,0 +1,2 @@
+# The lib subpackage is named via %mklibname; rpmlint does not see the macro.
+addFilter("lib-package-without-%mklibname")
